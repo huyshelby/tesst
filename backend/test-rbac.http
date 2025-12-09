@@ -1,0 +1,71 @@
+### Test Role-Based Access Control
+
+# 1. Đăng ký user thường
+POST http://localhost:4000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "Password123",
+  "name": "Regular User"
+}
+
+### 2. Đăng nhập user thường
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "Password123"
+}
+
+### 3. Truy cập endpoint user (với token từ bước 2)
+GET http://localhost:4000/api/users/me
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 4. Thử truy cập admin endpoint (sẽ bị từ chối)
+GET http://localhost:4000/api/admin/users
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 5. Tạo admin user (cần update database trực tiếp)
+# UPDATE "User" SET role = 'ADMIN' WHERE email = 'admin@example.com';
+
+### 6. Đăng ký admin
+POST http://localhost:4000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "AdminPass123",
+  "name": "Admin User"
+}
+
+### 7. Đăng nhập admin
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "AdminPass123"
+}
+
+### 8. Truy cập admin endpoints (với admin token)
+GET http://localhost:4000/api/admin/users
+Authorization: Bearer YOUR_ADMIN_TOKEN_HERE
+
+### 9. Xem thống kê hệ thống
+GET http://localhost:4000/api/admin/stats
+Authorization: Bearer YOUR_ADMIN_TOKEN_HERE
+
+### 10. Cập nhật role user
+PUT http://localhost:4000/api/admin/users/USER_ID_HERE/role
+Authorization: Bearer YOUR_ADMIN_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "role": "ADMIN"
+}
+
+### 11. Revoke sessions của user
+POST http://localhost:4000/api/admin/users/USER_ID_HERE/revoke-sessions
+Authorization: Bearer YOUR_ADMIN_TOKEN_HERE

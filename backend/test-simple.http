@@ -1,0 +1,31 @@
+### Test Basic API
+
+# 1. Health check
+GET http://localhost:4000/health
+
+### 2. Register user (mật khẩu đơn giản hơn để test)
+POST http://localhost:4000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test123456",
+  "name": "Test User"
+}
+
+### 3. Login
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com", 
+  "password": "Test123456"
+}
+
+### 4. Get user profile (đúng endpoint)
+GET http://localhost:4000/api/users/me
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### 5. Test admin endpoint (sẽ bị từ chối)
+GET http://localhost:4000/api/admin/users
+Authorization: Bearer YOUR_TOKEN_HERE

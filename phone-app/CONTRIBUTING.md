@@ -1,0 +1,3 @@
+- Mọi thảo luận, mô tả PR/issue dùng **tiếng Việt**.
+- Commit dùng Conventional Commits (`feat:`, `fix:`...), phần mô tả sau dấu “:” viết tiếng Việt.
+- Ví dụ: `feat(cart): thêm nút "Xóa khỏi giỏ"`; `fix(auth): xử lý lỗi refresh token khi tab bị sleep`

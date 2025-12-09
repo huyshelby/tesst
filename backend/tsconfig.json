@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "skipLibCheck": true
+    /* Quan trọng: tắt hoặc xóa dòng này nếu đang bật
+       "verbatimModuleSyntax": true
+    */
+  },
+  "include": ["src"]
+}
