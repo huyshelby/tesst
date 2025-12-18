@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_route_1 = __importDefault(require("./auth.route"));
+const admin_route_1 = __importDefault(require("./admin.route"));
+const product_route_1 = __importDefault(require("./product.route"));
+const cart_route_1 = __importDefault(require("./cart.route"));
+const order_route_1 = __importDefault(require("./order.route"));
+const user_route_1 = __importDefault(require("./user.route"));
+const r = (0, express_1.Router)();
+r.use("/auth", auth_route_1.default);
+r.use("/products", product_route_1.default);
+r.use("/cart", cart_route_1.default);
+r.use("/orders", order_route_1.default);
+r.use("/users", user_route_1.default);
+r.use("/admin", admin_route_1.default);
+r.get("/health", (req, res) => res.json({ status: "ok" }));
+r.get("/", (req, res) => res.json({ message: "Welcome to E-Commerce API" }));
+exports.default = r;

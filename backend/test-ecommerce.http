@@ -1,0 +1,169 @@
+### Test E-Commerce API
+
+# Variables
+@baseUrl = http://localhost:4000/api
+@accessToken = 
+
+### Health Check
+GET {{baseUrl}}/../health
+
+### ===== PRODUCTS =====
+
+### Get all products
+GET {{baseUrl}}/products
+
+### Get products with filters
+GET {{baseUrl}}/products?category=PHONE&sortBy=price&order=asc
+
+### Get products - search
+GET {{baseUrl}}/products?search=iphone
+
+### Get product by ID
+GET {{baseUrl}}/products/{{productId}}
+
+### Get product by slug
+GET {{baseUrl}}/products/slug/iphone-17-256gb
+
+### Create product (Admin only)
+POST {{baseUrl}}/products
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "Test Product",
+  "slug": "test-product",
+  "description": "This is a test product",
+  "price": 1000000,
+  "listPrice": 1500000,
+  "image": "https://example.com/image.jpg",
+  "category": "PHONE",
+  "brand": "Test Brand",
+  "stock": 100,
+  "badges": ["New"],
+  "installment": true
+}
+
+### ===== CART =====
+
+### Get cart (anonymous user - needs x-session-id header)
+GET {{baseUrl}}/cart
+x-session-id: test-session-123
+
+### Add item to cart (anonymous)
+POST {{baseUrl}}/cart/items
+x-session-id: test-session-123
+Content-Type: application/json
+
+{
+  "productId": "product-uuid-here",
+  "quantity": 1,
+  "selectedColor": "Titan tự nhiên",
+  "selectedStorage": "256GB"
+}
+
+### Update cart item quantity
+PUT {{baseUrl}}/cart/items/{{cartItemId}}
+x-session-id: test-session-123
+Content-Type: application/json
+
+{
+  "quantity": 2
+}
+
+### Remove item from cart
+DELETE {{baseUrl}}/cart/items/{{cartItemId}}
+x-session-id: test-session-123
+
+### Clear cart
+DELETE {{baseUrl}}/cart
+x-session-id: test-session-123
+
+### ===== AUTH =====
+
+### Register
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "name": "Test User"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Get cart (authenticated user)
+GET {{baseUrl}}/cart
+Authorization: Bearer {{accessToken}}
+
+### Add to cart (authenticated user)
+POST {{baseUrl}}/cart/items
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "productId": "product-uuid-here",
+  "quantity": 1
+}
+
+### ===== ORDERS =====
+
+### Create order from cart
+POST {{baseUrl}}/orders
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "customerName": "Nguyen Van A",
+  "customerEmail": "test@example.com",
+  "customerPhone": "0912345678",
+  "shippingAddress": "123 Nguyen Trai",
+  "shippingCity": "Ho Chi Minh",
+  "shippingDistrict": "Quan 1",
+  "paymentMethod": "CARD",
+  "notes": "Giao trong giờ hành chính"
+}
+
+### Get user's orders
+GET {{baseUrl}}/orders
+Authorization: Bearer {{accessToken}}
+
+### Get order by ID
+GET {{baseUrl}}/orders/{{orderId}}
+Authorization: Bearer {{accessToken}}
+
+### Cancel order
+POST {{baseUrl}}/orders/{{orderId}}/cancel
+Authorization: Bearer {{accessToken}}
+
+### ===== ADMIN ORDERS =====
+
+### Get all orders (Admin only)
+GET {{baseUrl}}/orders/admin/all
+Authorization: Bearer {{accessToken}}
+
+### Update order status (Admin only)
+PUT {{baseUrl}}/orders/admin/{{orderId}}/status
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "status": "CONFIRMED"
+}
+
+### Update payment status (Admin only)
+PUT {{baseUrl}}/orders/admin/{{orderId}}/payment
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "paymentStatus": "COMPLETED",
+  "cryptoTxHash": "0x123..."
+}

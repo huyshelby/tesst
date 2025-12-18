@@ -72,16 +72,52 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
   handler satisfies AppPageConfig<"/reset/[token]">
 }
 
-// Validate ..\..\src\app\[category]\page.tsx
+// Validate ..\..\src\app\gio-hang\page.tsx
 {
-  const handler = {} as typeof import("..\\..\\src\\app\\[category]\\page.js")
-  handler satisfies AppPageConfig<"/[category]">
+  const handler = {} as typeof import("..\\..\\src\\app\\gio-hang\\page.js")
+  handler satisfies AppPageConfig<"/gio-hang">
+}
+
+// Validate ..\..\src\app\laptop\page.tsx
+{
+  const handler = {} as typeof import("..\\..\\src\\app\\laptop\\page.js")
+  handler satisfies AppPageConfig<"/laptop">
 }
 
 // Validate ..\..\src\app\page.tsx
 {
   const handler = {} as typeof import("..\\..\\src\\app\\page.js")
   handler satisfies AppPageConfig<"/">
+}
+
+// Validate ..\..\src\app\phone\page.tsx
+{
+  const handler = {} as typeof import("..\\..\\src\\app\\phone\\page.js")
+  handler satisfies AppPageConfig<"/phone">
+}
+
+// Validate ..\..\src\app\product\[id]\page.tsx
+{
+  const handler = {} as typeof import("..\\..\\src\\app\\product\\[id]\\page.js")
+  handler satisfies AppPageConfig<"/product/[id]">
+}
+
+// Validate ..\..\src\app\tablet\page.tsx
+{
+  const handler = {} as typeof import("..\\..\\src\\app\\tablet\\page.js")
+  handler satisfies AppPageConfig<"/tablet">
+}
+
+// Validate ..\..\src\app\thanh-toan\page.tsx
+{
+  const handler = {} as typeof import("..\\..\\src\\app\\thanh-toan\\page.js")
+  handler satisfies AppPageConfig<"/thanh-toan">
+}
+
+// Validate ..\..\src\app\watch\page.tsx
+{
+  const handler = {} as typeof import("..\\..\\src\\app\\watch\\page.js")
+  handler satisfies AppPageConfig<"/watch">
 }
 
 

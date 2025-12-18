@@ -1,0 +1,69 @@
+### Test Product CRUD với isActive field
+
+@baseUrl = http://localhost:4000/api
+@token = YOUR_ADMIN_TOKEN_HERE
+
+### 1. Login để lấy token
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+
+### 2. Create Product - Test với đầy đủ fields
+POST {{baseUrl}}/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "iPhone 15 Pro Max Test",
+  "slug": "iphone-15-pro-max-test",
+  "description": "Test product với đầy đủ fields",
+  "price": 29990000,
+  "listPrice": 34990000,
+  "image": "https://example.com/iphone-15-pro-max.jpg",
+  "images": [
+    "https://example.com/iphone-1.jpg",
+    "https://example.com/iphone-2.jpg"
+  ],
+  "brand": "Apple",
+  "stock": 50,
+  "categoryId": "CATEGORY_ID_HERE",
+  "specs": {
+    "ram": "8GB",
+    "storage": "256GB",
+    "color": "Titan Tự Nhiên"
+  },
+  "badges": ["Trả góp 0%", "Mới 100%"],
+  "installment": true,
+  "isActive": true
+}
+
+### 3. Update Product - Test toggle isActive
+PUT {{baseUrl}}/products/PRODUCT_ID_HERE
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "isActive": false
+}
+
+### 4. Update Product - Test với images
+PUT {{baseUrl}}/products/PRODUCT_ID_HERE
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "image": "https://new-url.com/main.jpg",
+  "images": [
+    "https://new-url.com/1.jpg",
+    "https://new-url.com/2.jpg",
+    "https://new-url.com/3.jpg"
+  ]
+}
+
+### 5. Get Product by ID
+GET {{baseUrl}}/products/PRODUCT_ID_HERE
+Authorization: Bearer {{token}}
