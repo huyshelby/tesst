@@ -1,4 +1,11 @@
 {
+  "/(account)/account/page": "app/(account)/account/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js"
+  "/gio-hang/page": "app/gio-hang/page.js",
+  "/laptop/page": "app/laptop/page.js",
+  "/page": "app/page.js",
+  "/product/[id]/page": "app/product/[id]/page.js",
+  "/thanh-toan/page": "app/thanh-toan/page.js"
 }

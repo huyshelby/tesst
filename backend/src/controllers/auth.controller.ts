@@ -48,9 +48,17 @@ export async function login(req: Request, res: Response) {
   // Set cookie HttpOnly
   setRefreshCookie(res, refreshToken);
 
-  // Trả access token ngắn hạn
+  // Trả access token ngắn hạn + user info
   const accessToken = signAccessToken(user.id, user.role);
-  res.json({ token: accessToken });
+  res.json({
+    accessToken,
+    user: {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    },
+  });
 }
 
 export async function refresh(req: Request, res: Response) {
@@ -97,7 +105,7 @@ export async function refresh(req: Request, res: Response) {
 
     // Trả access token mới với role
     const newAccess = signAccessToken(payload.userId, user.role);
-    res.json({ token: newAccess });
+    res.json({ accessToken: newAccess });
   } catch (err) {
     if (err instanceof TokenExpiredError) {
       return res.status(401).json({ message: "Refresh JWT expired" });

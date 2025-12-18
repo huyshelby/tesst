@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { prisma } from '../utils/prisma';
-import { Role } from '@prisma/client';
+import { Request, Response } from "express";
+import { prisma } from "../utils/prisma";
+import { Role } from "@prisma/client";
 
 // Lấy danh sách tất cả users (chỉ admin)
 export async function getAllUsers(req: Request, res: Response) {
@@ -19,7 +19,7 @@ export async function getAllUsers(req: Request, res: Response) {
         createdAt: true,
         updatedAt: true,
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     }),
     prisma.user.count(),
   ]);
@@ -41,9 +41,9 @@ export async function updateUserRole(req: Request, res: Response) {
   const { role } = res.locals.validated.body;
 
   // Không cho phép admin tự hạ cấp chính mình
-  if (userId === req.user!.userId && role !== Role.ADMIN) {
-    return res.status(400).json({ 
-      message: 'Cannot demote yourself from admin role' 
+  if (userId === req.user!.id && role !== Role.ADMIN) {
+    return res.status(400).json({
+      message: "Cannot demote yourself from admin role",
     });
   }
 
@@ -67,9 +67,9 @@ export async function deleteUser(req: Request, res: Response) {
   const { userId } = req.params;
 
   // Không cho phép admin xóa chính mình
-  if (userId === req.user!.userId) {
-    return res.status(400).json({ 
-      message: 'Cannot delete your own account' 
+  if (userId === req.user!.id) {
+    return res.status(400).json({
+      message: "Cannot delete your own account",
     });
   }
 
@@ -77,31 +77,27 @@ export async function deleteUser(req: Request, res: Response) {
     where: { id: userId },
   });
 
-  res.json({ message: 'User deleted successfully' });
+  res.json({ message: "User deleted successfully" });
 }
 
 // Thống kê hệ thống (chỉ admin)
 export async function getSystemStats(req: Request, res: Response) {
-  const [
-    totalUsers,
-    totalAdmins,
-    activeSessions,
-    recentUsers,
-  ] = await Promise.all([
-    prisma.user.count(),
-    prisma.user.count({ where: { role: Role.ADMIN } }),
-    prisma.refreshSession.count({
-      where: {
-        revokedAt: null,
-        expiresAt: { gt: new Date() },
-      },
-    }),
-    prisma.user.count({
-      where: {
-        createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) }, // 7 ngày
-      },
-    }),
-  ]);
+  const [totalUsers, totalAdmins, activeSessions, recentUsers] =
+    await Promise.all([
+      prisma.user.count(),
+      prisma.user.count({ where: { role: Role.ADMIN } }),
+      prisma.refreshSession.count({
+        where: {
+          revokedAt: null,
+          expiresAt: { gt: new Date() },
+        },
+      }),
+      prisma.user.count({
+        where: {
+          createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) }, // 7 ngày
+        },
+      }),
+    ]);
 
   res.json({
     totalUsers,
@@ -129,8 +125,8 @@ export async function revokeUserSessions(req: Request, res: Response) {
     },
   });
 
-  res.json({ 
-    message: 'All user sessions revoked',
+  res.json({
+    message: "All user sessions revoked",
     revokedCount: result.count,
   });
 }
