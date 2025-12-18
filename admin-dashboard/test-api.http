@@ -1,0 +1,31 @@
+### Health Check
+GET http://localhost:4000/api/health
+
+### Login Admin
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "AdminPass123"
+}
+
+### Get Current User (replace TOKEN with accessToken from login response)
+GET http://localhost:4000/api/auth/me
+Authorization: Bearer TOKEN
+
+### Get All Users (Admin only)
+GET http://localhost:4000/api/admin/users
+Authorization: Bearer TOKEN
+
+### Get Categories
+GET http://localhost:4000/api/categories
+Authorization: Bearer TOKEN
+
+### Get Products
+GET http://localhost:4000/api/products
+Authorization: Bearer TOKEN
+
+### Logout
+POST http://localhost:4000/api/auth/logout
+Authorization: Bearer TOKEN

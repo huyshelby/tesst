@@ -1,0 +1,72 @@
+### Variables
+@baseUrl = http://localhost:4000/api
+@adminToken = your-admin-access-token
+
+### Get all categories
+GET {{baseUrl}}/categories
+
+### Get all categories (including inactive)
+GET {{baseUrl}}/categories?includeInactive=true
+
+### Get category tree
+GET {{baseUrl}}/categories/tree
+
+### Get category by ID
+GET {{baseUrl}}/categories/303a86d9-b62a-427f-93cc-5f4b2a5d10f9
+
+### Get category by slug
+GET {{baseUrl}}/categories/slug/phone
+
+### Create new category (Admin only)
+POST {{baseUrl}}/categories
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "iPhone",
+  "slug": "iphone",
+  "description": "Điện thoại iPhone của Apple",
+  "icon": "📱",
+  "parentId": null,
+  "displayOrder": 10,
+  "isActive": true
+}
+
+### Create subcategory (Admin only)
+POST {{baseUrl}}/categories
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "iPhone 17 Series",
+  "slug": "iphone-17-series",
+  "description": "Dòng iPhone thế hệ 17",
+  "icon": "📱",
+  "parentId": "parent-category-uuid",
+  "displayOrder": 1,
+  "isActive": true
+}
+
+### Update category (Admin only)
+PUT {{baseUrl}}/categories/303a86d9-b62a-427f-93cc-5f4b2a5d10f9
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Điện thoại di động",
+  "description": "Cập nhật mô tả mới",
+  "displayOrder": 5
+}
+
+### Deactivate category (Admin only)
+PUT {{baseUrl}}/categories/303a86d9-b62a-427f-93cc-5f4b2a5d10f9
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "isActive": false
+}
+
+### Delete category (Admin only)
+DELETE {{baseUrl}}/categories/303a86d9-b62a-427f-93cc-5f4b2a5d10f9
+Authorization: Bearer {{adminToken}}

@@ -4,6 +4,7 @@ import { ENV } from "../utils/env";
 import { Role } from "@prisma/client";
 
 export interface JwtPayload {
+  id: string;
   userId: string;
   role: Role;
 }
@@ -49,4 +50,22 @@ export function requireRole(...allowedRoles: Role[]) {
 
 // Shorthand middlewares
 export const requireAdmin = requireRole(Role.ADMIN);
+
+// Optional auth - doesn't fail if no token provided
+export function optionalAuth(req: Request, res: Response, next: NextFunction) {
+  const token = (req.headers.authorization || "").replace("Bearer ", "");
+
+  if (!token) {
+    return next();
+  }
+
+  try {
+    const payload = jwt.verify(token, ENV.JWT_SECRET) as JwtPayload;
+    req.user = payload;
+  } catch {
+    // Invalid token, but continue without user
+  }
+
+  next();
+}
 export const requireUser = requireRole(Role.USER, Role.ADMIN); // Admin có thể truy cập user endpoints

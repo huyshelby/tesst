@@ -1,0 +1,38 @@
+### Dashboard Statistics API Tests
+
+### 1. Login as Admin
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+
+### 2. Get Dashboard Stats
+GET http://localhost:4000/api/dashboard/stats
+Authorization: Bearer {{accessToken}}
+
+### 3. Get Revenue Chart (7 days)
+GET http://localhost:4000/api/dashboard/revenue?period=7days
+Authorization: Bearer {{accessToken}}
+
+### 4. Get Revenue Chart (30 days)
+GET http://localhost:4000/api/dashboard/revenue?period=30days
+Authorization: Bearer {{accessToken}}
+
+### 5. Get Revenue Chart (12 months)
+GET http://localhost:4000/api/dashboard/revenue?period=12months
+Authorization: Bearer {{accessToken}}
+
+### 6. Get Order Status Distribution
+GET http://localhost:4000/api/dashboard/order-status
+Authorization: Bearer {{accessToken}}
+
+### 7. Get Recent Orders
+GET http://localhost:4000/api/dashboard/recent-orders?limit=10
+Authorization: Bearer {{accessToken}}
+
+### 8. Get Best Selling Products
+GET http://localhost:4000/api/dashboard/best-selling?limit=5
+Authorization: Bearer {{accessToken}}

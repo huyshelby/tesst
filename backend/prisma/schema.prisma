@@ -25,7 +25,9 @@ model User {
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
 
-  sessions  RefreshSession[]  // <— thêm quan hệ
+  sessions  RefreshSession[]
+  cart      Cart?
+  orders    Order[]
 }
 
 model RefreshSession {
@@ -38,5 +40,175 @@ model RefreshSession {
 
   @@index([userId])
   @@index([expiresAt])
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  image       String?
+  icon        String?
+  parentId    String?
+  parent      Category? @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+  products    Product[]
+  displayOrder Int      @default(0)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([slug])
+  @@index([parentId])
+  @@index([isActive])
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String?
+  price       Float
+  listPrice   Float?
+  image       String
+  images      String[] @default([])
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  brand       String
+  stock       Int             @default(0)
+  rating      Float?          @default(0)
+  reviews     Int             @default(0)
+  badges      String[]        @default([])
+  installment Boolean         @default(false)
+  isActive    Boolean         @default(true)
+  specs       Json?           // {ram: 8, storage: 256, color: "Black"}
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+
+  @@index([categoryId])
+  @@index([brand])
+  @@index([slug])
+  @@index([isActive])
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String?    @unique
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionId String?    @unique // for anonymous users
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([sessionId])
+}
+
+model CartItem {
+  id              String  @id @default(uuid())
+  cartId          String
+  cart            Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId       String
+  product         Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity        Int     @default(1)
+  selectedColor   String?
+  selectedStorage String?
+
+  @@index([cartId])
+  @@index([productId])
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPING
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CARD
+  MOMO
+  VNPAY
+  BANK_TRANSFER
+  INSTALLMENT
+  CRYPTO
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model Order {
+  id            String        @id @default(uuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id])
+  orderNumber   String        @unique
+  status        OrderStatus   @default(PENDING)
+  
+  // Customer info
+  customerName  String
+  customerEmail String
+  customerPhone String
+  
+  // Shipping info
+  shippingAddress String
+  shippingCity    String
+  shippingDistrict String?
+  shippingWard    String?
+  
+  // Payment info
+  paymentMethod   PaymentMethod
+  paymentStatus   PaymentStatus @default(PENDING)
+  
+  // Crypto payment details
+  cryptoWallet    String?
+  cryptoNetwork   String?
+  cryptoToken     String?
+  cryptoTxHash    String?
+  
+  // Pricing
+  subtotal      Float
+  shippingFee   Float         @default(0)
+  discount      Float         @default(0)
+  total         Float
+  
+  notes         String?
+  items         OrderItem[]
+  
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([orderNumber])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id              String  @id @default(uuid())
+  orderId         String
+  order           Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId       String
+  product         Product @relation(fields: [productId], references: [id])
+  
+  productName     String  // snapshot at time of order
+  productImage    String
+  price           Float
+  quantity        Int
+  selectedColor   String?
+  selectedStorage String?
+  
+  subtotal        Float
+
+  @@index([orderId])
+  @@index([productId])
 }
 
