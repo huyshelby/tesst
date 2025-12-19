@@ -1,0 +1,115 @@
+### ===========================================
+### TEST ORDER FLOW - Phone App E-Commerce
+### ===========================================
+
+### Step 1: Login as a customer
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "user123"
+}
+
+### Extract access token from response (use manually)
+@accessToken = your_access_token_here
+
+### Step 2: Add product to cart
+POST http://localhost:4000/api/cart/items
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "productId": "product_id_here",
+  "quantity": 1,
+  "selectedColor": "Midnight",
+  "selectedStorage": "128GB"
+}
+
+### Step 3: Get cart
+GET http://localhost:4000/api/cart
+Authorization: Bearer {{accessToken}}
+
+### Step 4: Create order
+POST http://localhost:4000/api/orders
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "customerName": "Nguyễn Văn A",
+  "customerEmail": "user@example.com",
+  "customerPhone": "0912345678",
+  "shippingAddress": "123 Lê Lợi",
+  "shippingCity": "Hồ Chí Minh",
+  "shippingDistrict": "Quận 1",
+  "shippingWard": "Phường Bến Nghé",
+  "paymentMethod": "CARD",
+  "notes": "Giao giờ hành chính"
+}
+
+### Step 5: Get user's orders
+GET http://localhost:4000/api/orders?page=1&limit=10
+Authorization: Bearer {{accessToken}}
+
+### Step 6: Get specific order by ID
+GET http://localhost:4000/api/orders/order_id_here
+Authorization: Bearer {{accessToken}}
+
+### Step 7: Get order by order number
+GET http://localhost:4000/api/orders/number/ORD-XXXXX
+Authorization: Bearer {{accessToken}}
+
+### Step 8: Cancel order (if needed)
+POST http://localhost:4000/api/orders/order_id_here/cancel
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### ADMIN ROUTES
+### ===========================================
+
+### Login as admin
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+
+@adminToken = your_admin_token_here
+
+### Get all orders (Admin)
+GET http://localhost:4000/api/orders/admin/all?page=1&limit=50
+Authorization: Bearer {{adminToken}}
+
+### Update order status (Admin)
+PUT http://localhost:4000/api/orders/admin/order_id_here/status
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "status": "CONFIRMED"
+}
+
+### Update payment status (Admin)
+PUT http://localhost:4000/api/orders/admin/order_id_here/payment
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "paymentStatus": "COMPLETED"
+}
+
+### ===========================================
+### QUICK TEST WITH MOCK DATA
+### ===========================================
+
+### Get categories first
+GET http://localhost:4000/api/categories
+
+### Get products in a category
+GET http://localhost:4000/api/products?categoryId=category_id_here
+
+### Check user profile
+GET http://localhost:4000/api/auth/me
+Authorization: Bearer {{accessToken}}

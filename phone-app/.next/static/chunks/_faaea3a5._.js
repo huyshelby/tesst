@@ -43,6 +43,12 @@ async function fetchApi(path) {
     const headers = new Headers(opts.headers || {});
     const token = (await __turbopack_context__.A("[project]/src/lib/token.ts [app-client] (ecmascript, async loader)")).getAccessToken();
     if (token) headers.set("Authorization", "Bearer ".concat(token));
+    // Attach anonymous cart session id for cart APIs
+    try {
+        const { getOrCreateSessionId } = await __turbopack_context__.A("[project]/src/lib/cart-session.ts [app-client] (ecmascript, async loader)");
+        const sid = getOrCreateSessionId();
+        if (sid) headers.set("x-session-id", sid);
+    } catch (e) {}
     var _headers_get;
     headers.set("Content-Type", (_headers_get = headers.get("Content-Type")) !== null && _headers_get !== void 0 ? _headers_get : "application/json");
     const res = await fetch("".concat(base).concat(path), {
@@ -114,10 +120,15 @@ __turbopack_context__.s([
     "register",
     ()=>register,
     "resetPassword",
-    ()=>resetPassword
+    ()=>resetPassword,
+    "useAuth",
+    ()=>useAuth
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/api.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$token$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/token.ts [app-client] (ecmascript)");
+// React Hook for auth state
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var _s = __turbopack_context__.k.signature();
 ;
 ;
 async function login(email, password) {
@@ -189,6 +200,42 @@ async function fetchMe() {
     if (res.ok) return res.json();
     return null;
 }
+;
+;
+function useAuth() {
+    _s();
+    const [user, setUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "useAuth.useEffect": ()=>{
+            const loadUser = {
+                "useAuth.useEffect.loadUser": async ()=>{
+                    const token = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$token$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAccessToken"])();
+                    if (!token) {
+                        setLoading(false);
+                        return;
+                    }
+                    try {
+                        const userData = await fetchMe();
+                        setUser(userData);
+                    } catch (err) {
+                        console.error("Failed to load user:", err);
+                        setUser(null);
+                    } finally{
+                        setLoading(false);
+                    }
+                }
+            }["useAuth.useEffect.loadUser"];
+            loadUser();
+        }
+    }["useAuth.useEffect"], []);
+    return {
+        user,
+        loading,
+        setUser
+    };
+}
+_s(useAuth, "NiO5z6JIqzX62LS5UWDgIqbZYyY=");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }

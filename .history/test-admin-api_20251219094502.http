@@ -1,0 +1,22 @@
+# Test Admin API - Kiểm tra API hoạt động
+
+### 1. Login để lấy token mới
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "AdminPass123"
+}
+
+### 2. Kiểm tra user hiện tại (sau khi login)
+GET http://localhost:4000/api/auth/me
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### 3. Lấy danh sách users (Admin only)
+GET http://localhost:4000/api/admin/users?page=1&limit=10
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### 4. Lấy stats (Admin only)
+GET http://localhost:4000/api/admin/stats
+Authorization: Bearer YOUR_TOKEN_HERE
