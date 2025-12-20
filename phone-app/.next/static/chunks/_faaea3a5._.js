@@ -217,8 +217,12 @@ async function fetchMe() {
     const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["fetchApi"])("/auth/me", {
         method: "GET"
     });
-    if (res.ok) return res.json();
-    return null;
+    if (!res.ok) return null;
+    const data = await res.json().catch(()=>null);
+    var _data_user;
+    // Chấp nhận cả 2 dạng: { user: {...} } hoặc {...user fields}
+    const user = data && ((_data_user = data.user) !== null && _data_user !== void 0 ? _data_user : data);
+    return user !== null && user !== void 0 ? user : null;
 }
 ;
 ;
