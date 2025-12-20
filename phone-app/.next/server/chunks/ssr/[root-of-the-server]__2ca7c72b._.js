@@ -82,17 +82,28 @@ async function tryRefresh() {
 "use strict";
 
 __turbopack_context__.s([
+    "clearAccessToken",
+    ()=>clearAccessToken,
     "getAccessToken",
     ()=>getAccessToken,
     "setAccessToken",
     ()=>setAccessToken
 ]);
 let accessToken = null;
+const KEY = "access_token";
 function setAccessToken(token) {
     accessToken = token;
+    if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+    ;
 }
 function getAccessToken() {
-    return accessToken;
+    if (accessToken) return accessToken;
+    if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+    ;
+    return null;
+}
+function clearAccessToken() {
+    setAccessToken(null);
 }
 }),
 "[project]/src/lib/auth-client.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {

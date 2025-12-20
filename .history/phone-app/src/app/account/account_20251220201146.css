@@ -1,0 +1,368 @@
+/**
+ * Account Page - Apple-like Minimal Design System
+ * Optimized for premium tech store aesthetics
+ */
+
+/* ===== CUSTOM PROPERTIES ===== */
+:root {
+  /* Primary Colors - Minimal Palette */
+  --account-primary-text: #1C1C1E;
+  --account-secondary-text: #48484A;
+  --account-tertiary-text: #8E8E93;
+  
+  /* Background Colors */
+  --account-bg-primary: #FFFFFF;
+  --account-bg-secondary: #F5F5F7;
+  --account-bg-tertiary: #E5E5EA;
+  
+  /* Border Colors */
+  --account-border-light: #D1D1D6;
+  --account-border-lighter: #E5E5EA;
+  
+  /* Accent Colors - Subtle */
+  --account-accent-blue: #007AFF;
+  --account-accent-green: #34C759;
+  --account-accent-amber: #FF9500;
+  
+  /* Shadows - Very subtle */
+  --account-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  --account-shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+  --account-shadow-lg: 0 8px 24px 0 rgba(0, 0, 0, 0.12);
+  
+  /* Spacing */
+  --account-spacing-xs: 0.5rem;   /* 8px */
+  --account-spacing-sm: 0.75rem;  /* 12px */
+  --account-spacing-md: 1rem;     /* 16px */
+  --account-spacing-lg: 1.5rem;   /* 24px */
+  --account-spacing-xl: 2rem;     /* 32px */
+  --account-spacing-2xl: 3rem;    /* 48px */
+  
+  /* Border Radius */
+  --account-radius-sm: 0.375rem;  /* 6px */
+  --account-radius-md: 0.5rem;    /* 8px */
+  --account-radius-lg: 0.75rem;   /* 12px */
+  --account-radius-xl: 1rem;      /* 16px */
+  --account-radius-2xl: 1.5rem;   /* 24px */
+  --account-radius-full: 9999px;
+  
+  /* Typography Scale */
+  --account-text-xs: 0.75rem;     /* 12px */
+  --account-text-sm: 0.875rem;    /* 14px */
+  --account-text-base: 0.9375rem; /* 15px */
+  --account-text-lg: 1.0625rem;   /* 17px */
+  --account-text-xl: 1.25rem;     /* 20px */
+  --account-text-2xl: 1.5rem;     /* 24px */
+  --account-text-3xl: 2rem;       /* 32px */
+  --account-text-4xl: 2.5rem;     /* 40px */
+  
+  /* Letter Spacing */
+  --account-tracking-tight: -0.02em;
+  --account-tracking-normal: 0em;
+  --account-tracking-wide: 0.01em;
+}
+
+/* ===== TYPOGRAPHY ===== */
+
+/* Headings - Minimal, tight tracking */
+.account-heading-1 {
+  font-size: var(--account-text-4xl);
+  font-weight: 600;
+  letter-spacing: var(--account-tracking-tight);
+  color: var(--account-primary-text);
+  line-height: 1.1;
+}
+
+.account-heading-2 {
+  font-size: var(--account-text-2xl);
+  font-weight: 600;
+  letter-spacing: var(--account-tracking-tight);
+  color: var(--account-primary-text);
+  line-height: 1.2;
+}
+
+.account-heading-3 {
+  font-size: var(--account-text-xl);
+  font-weight: 600;
+  letter-spacing: var(--account-tracking-tight);
+  color: var(--account-primary-text);
+  line-height: 1.3;
+}
+
+/* Body Text */
+.account-body-large {
+  font-size: var(--account-text-lg);
+  font-weight: 400;
+  color: var(--account-secondary-text);
+  line-height: 1.5;
+}
+
+.account-body-base {
+  font-size: var(--account-text-base);
+  font-weight: 400;
+  color: var(--account-secondary-text);
+  line-height: 1.5;
+}
+
+.account-body-small {
+  font-size: var(--account-text-sm);
+  font-weight: 400;
+  color: var(--account-tertiary-text);
+  line-height: 1.4;
+}
+
+/* ===== COMPONENTS ===== */
+
+/* Card Styles */
+.account-card {
+  background: var(--account-bg-primary);
+  border-radius: var(--account-radius-2xl);
+  box-shadow: var(--account-shadow-sm);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.account-card:hover {
+  box-shadow: var(--account-shadow-md);
+}
+
+.account-card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--account-shadow-lg);
+}
+
+/* Stat Card Styles */
+.account-stat-card {
+  background: var(--account-bg-primary);
+  border: 1px solid var(--account-border-lighter);
+  border-radius: var(--account-radius-xl);
+  padding: var(--account-spacing-lg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.account-stat-card:hover {
+  border-color: var(--account-border-light);
+  box-shadow: var(--account-shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Menu Item Styles */
+.account-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--account-spacing-md);
+  padding: var(--account-spacing-lg);
+  min-height: 88px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.account-menu-item:hover {
+  background-color: var(--account-bg-secondary);
+}
+
+.account-menu-item-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--account-radius-xl);
+  background-color: var(--account-bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.account-menu-item:hover .account-menu-item-icon {
+  background-color: var(--account-bg-tertiary);
+  transform: scale(1.05);
+}
+
+/* Badge Styles */
+.account-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--account-radius-full);
+  font-size: var(--account-text-sm);
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.account-badge-primary {
+  background-color: var(--account-bg-secondary);
+  color: var(--account-primary-text);
+  border-color: var(--account-border-light);
+}
+
+.account-badge-success {
+  background-color: #ECFDF5;
+  color: #059669;
+  border-color: #A7F3D0;
+}
+
+.account-badge-warning {
+  background-color: #FFFBEB;
+  color: #D97706;
+  border-color: #FDE68A;
+}
+
+/* Button Styles - Minimal */
+.account-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--account-radius-full);
+  font-size: var(--account-text-base);
+  font-weight: 500;
+  border: 1px solid;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.account-btn-outline {
+  background: transparent;
+  color: var(--account-primary-text);
+  border-color: var(--account-border-light);
+}
+
+.account-btn-outline:hover {
+  background: var(--account-bg-secondary);
+  border-color: var(--account-border-light);
+}
+
+.account-btn-primary {
+  background: var(--account-primary-text);
+  color: white;
+  border-color: var(--account-primary-text);
+}
+
+.account-btn-primary:hover {
+  background: var(--account-secondary-text);
+  border-color: var(--account-secondary-text);
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes account-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes account-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.account-animate-fade-in {
+  animation: account-fade-in 0.4s ease-out;
+}
+
+.account-animate-scale-in {
+  animation: account-scale-in 0.3s ease-out;
+}
+
+/* Stagger animation for list items */
+.account-menu-item:nth-child(1) { animation-delay: 0.05s; }
+.account-menu-item:nth-child(2) { animation-delay: 0.1s; }
+.account-menu-item:nth-child(3) { animation-delay: 0.15s; }
+.account-menu-item:nth-child(4) { animation-delay: 0.2s; }
+.account-menu-item:nth-child(5) { animation-delay: 0.25s; }
+.account-menu-item:nth-child(6) { animation-delay: 0.3s; }
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  :root {
+    --account-text-4xl: 2rem;    /* 32px */
+    --account-text-3xl: 1.75rem; /* 28px */
+    --account-text-2xl: 1.25rem; /* 20px */
+  }
+  
+  .account-stat-card {
+    padding: var(--account-spacing-md);
+  }
+  
+  .account-menu-item {
+    padding: var(--account-spacing-md);
+    min-height: 80px;
+  }
+}
+
+/* ===== UTILITIES ===== */
+
+/* Smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  .account-smooth-scroll {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Focus visible - Accessibility */
+.account-focus-visible:focus-visible {
+  outline: 2px solid var(--account-accent-blue);
+  outline-offset: 2px;
+}
+
+/* Antialiasing */
+.account-text-smooth {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Backdrop blur for glassmorphism */
+.account-backdrop-blur {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Container max-width for account pages */
+.account-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--account-spacing-md);
+  padding-right: var(--account-spacing-md);
+}
+
+@media (min-width: 640px) {
+  .account-container {
+    padding-left: var(--account-spacing-lg);
+    padding-right: var(--account-spacing-lg);
+  }
+}
+
+/* Empty State Styles */
+.account-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--account-spacing-2xl) var(--account-spacing-lg);
+  text-align: center;
+}
+
+.account-empty-state-icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--account-tertiary-text);
+  margin-bottom: var(--account-spacing-md);
+}
+
+.account-empty-state-text {
+  font-size: var(--account-text-base);
+  color: var(--account-tertiary-text);
+  margin-bottom: var(--account-spacing-md);
+}

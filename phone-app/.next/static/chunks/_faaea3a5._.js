@@ -89,17 +89,37 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "use strict";
 
 __turbopack_context__.s([
+    "clearAccessToken",
+    ()=>clearAccessToken,
     "getAccessToken",
     ()=>getAccessToken,
     "setAccessToken",
     ()=>setAccessToken
 ]);
 let accessToken = null;
+const KEY = "access_token";
 function setAccessToken(token) {
     accessToken = token;
+    if ("TURBOPACK compile-time truthy", 1) {
+        try {
+            if (token) localStorage.setItem(KEY, token);
+            else localStorage.removeItem(KEY);
+        } catch (e) {}
+    }
 }
 function getAccessToken() {
-    return accessToken;
+    if (accessToken) return accessToken;
+    if ("TURBOPACK compile-time truthy", 1) {
+        try {
+            const t = localStorage.getItem(KEY);
+            accessToken = t;
+            return t;
+        } catch (e) {}
+    }
+    return null;
+}
+function clearAccessToken() {
+    setAccessToken(null);
 }
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);

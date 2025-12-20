@@ -60,6 +60,12 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
   handler satisfies AppPageConfig<"/reset/[token]">
 }
 
+// Validate ..\..\src\app\account\addresses\new\page.tsx
+{
+  const handler = {} as typeof import("..\\..\\src\\app\\account\\addresses\\new\\page.js")
+  handler satisfies AppPageConfig<"/account/addresses/new">
+}
+
 // Validate ..\..\src\app\account\orders\[orderId]\page.tsx
 {
   const handler = {} as typeof import("..\\..\\src\\app\\account\\orders\\[orderId]\\page.js")

@@ -4,6 +4,10 @@
       "static/media/2bbe8d2671613f1f-s.p.76dcb0b2.woff2",
       "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
     ],
+    "[project]/src/app/account/addresses/new/page": [
+      "static/media/2bbe8d2671613f1f-s.p.76dcb0b2.woff2",
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
+    ],
     "[project]/src/app/account/orders/page": [
       "static/media/2bbe8d2671613f1f-s.p.76dcb0b2.woff2",
       "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
@@ -12,11 +16,11 @@
       "static/media/2bbe8d2671613f1f-s.p.76dcb0b2.woff2",
       "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
     ],
-    "[project]/src/app/dat-hang-thanh-cong/page": [
+    "[project]/src/app/gio-hang/page": [
       "static/media/2bbe8d2671613f1f-s.p.76dcb0b2.woff2",
       "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
     ],
-    "[project]/src/app/gio-hang/page": [
+    "[project]/src/app/laptop/page": [
       "static/media/2bbe8d2671613f1f-s.p.76dcb0b2.woff2",
       "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
     ],
