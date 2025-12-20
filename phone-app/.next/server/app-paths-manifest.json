@@ -1,16 +1,6 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/account/addresses/new/page": "app/account/addresses/new/page.js",
-  "/account/orders/page": "app/account/orders/page.js",
   "/account/page": "app/account/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/gio-hang/page": "app/gio-hang/page.js",
   "/laptop/page": "app/laptop/page.js",
-  "/login/page": "app/login/page.js",
-  "/page": "app/page.js",
-  "/phone/page": "app/phone/page.js",
-  "/product/[id]/page": "app/product/[id]/page.js",
-  "/tablet/page": "app/tablet/page.js",
-  "/thanh-toan/page": "app/thanh-toan/page.js",
-  "/watch/page": "app/watch/page.js"
+  "/page": "app/page.js"
 }
