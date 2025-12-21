@@ -84,7 +84,6 @@ export function useDashboardStats() {
 
 // Get revenue chart data
 export function useRevenueChart(period: '7days' | '30days' | '12months' = '7days') {
-  const { isAdmin } = useAuth()
   return useQuery<RevenueChartData[]>({
     queryKey: ['dashboard', 'revenue', period],
     queryFn: async () => {
@@ -93,7 +92,6 @@ export function useRevenueChart(period: '7days' | '30days' | '12months' = '7days
       })
       return data
     },
-    enabled: !!isAdmin,
   })
 }
 

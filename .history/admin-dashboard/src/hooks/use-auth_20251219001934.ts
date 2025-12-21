@@ -10,10 +10,7 @@ export function useAuth() {
 
   const { data: user, isLoading } = useQuery<User>({
     queryKey: ['user'],
-    queryFn: async () => {
-      const data = await authService.getCurrentUser()
-      return (data as any)?.user ?? (data as any)
-    },
+    queryFn: authService.getCurrentUser,
     retry: false,
     enabled: typeof window !== 'undefined' && !!authService.getAccessToken(),
   })
@@ -44,7 +41,6 @@ export function useAuth() {
     user,
     isLoading,
     isAuthenticated: !!user,
-    isAdmin: user?.role === 'ADMIN',
     login: loginMutation.mutate,
     logout: logoutMutation.mutate,
     isLoggingIn: loginMutation.isPending,

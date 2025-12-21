@@ -21,12 +21,8 @@ export const authService = {
   },
 
   async getCurrentUser() {
-    const { data, status } = await api.get('/auth/me', {
-      headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' },
-      params: { ts: Date.now() },
-    })
-    // Chấp nhận cả 2 dạng payload
-    return (data as any)?.user ?? (data as any)
+    const { data } = await api.get('/auth/me')
+    return data.user
   },
 
   getAccessToken() {

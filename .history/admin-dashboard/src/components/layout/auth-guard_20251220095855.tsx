@@ -7,14 +7,13 @@ import { useAuth } from '@/hooks/use-auth'
 // Chạy redirect trên client, không chặn render server
 export function AuthGuard() {
   const router = useRouter()
-  const { isAuthenticated, isAdmin, isLoading } = useAuth()
+  const { isAuthenticated, isLoading } = useAuth()
 
   useEffect(() => {
-    if (!isLoading) {
-      if (!isAuthenticated) router.push('/login')
-      else if (!isAdmin) router.push('/login?role=admin')
+    if (!isLoading && !isAuthenticated) {
+      router.push('/login')
     }
-  }, [isAuthenticated, isAdmin, isLoading, router])
+  }, [isAuthenticated, isLoading, router])
 
   return null
 }

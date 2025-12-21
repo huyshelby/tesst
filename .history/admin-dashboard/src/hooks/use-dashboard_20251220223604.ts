@@ -70,21 +70,18 @@ export interface BestSellingProduct {
 
 // Get dashboard statistics
 export function useDashboardStats() {
-  const { isAdmin } = useAuth()
   return useQuery<DashboardStats>({
     queryKey: ['dashboard', 'stats'],
     queryFn: async ({ signal }) => {
       const { data } = await api.get('/dashboard/stats', { signal })
       return data
     },
-    enabled: !!isAdmin,
     refetchInterval: 60000, // Refetch every minute
   })
 }
 
 // Get revenue chart data
 export function useRevenueChart(period: '7days' | '30days' | '12months' = '7days') {
-  const { isAdmin } = useAuth()
   return useQuery<RevenueChartData[]>({
     queryKey: ['dashboard', 'revenue', period],
     queryFn: async () => {
@@ -93,7 +90,6 @@ export function useRevenueChart(period: '7days' | '30days' | '12months' = '7days
       })
       return data
     },
-    enabled: !!isAdmin,
   })
 }
 
