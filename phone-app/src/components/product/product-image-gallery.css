@@ -1,0 +1,102 @@
+/* Product Image Gallery Animations */
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Gallery Image Transition */
+.gallery-image-enter {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.gallery-image-exit {
+  animation: fadeIn 0.3s ease-out reverse;
+}
+
+/* Thumbnail Hover Effect */
+.thumbnail-hover {
+  transition: all 0.2s ease-out;
+}
+
+.thumbnail-hover:hover {
+  transform: scale(1.05);
+}
+
+/* Zoom Modal Animation */
+.zoom-modal-enter {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.zoom-modal-exit {
+  animation: fadeIn 0.2s ease-out reverse;
+}
+
+/* Badge Animation */
+.badge-enter {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+/* Carousel Dot Animation */
+.carousel-dot {
+  transition: all 0.3s ease-out;
+}
+
+.carousel-dot.active {
+  background-color: rgb(59, 130, 246);
+  width: 1.5rem;
+}
+
+/* Touch Swipe Indicator */
+.swipe-indicator {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .gallery-image-enter {
+    animation: slideInRight 0.3s ease-out;
+  }
+
+  .gallery-image-exit {
+    animation: slideInLeft 0.3s ease-out reverse;
+  }
+}
+

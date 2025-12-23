@@ -1,0 +1,84 @@
+### Test Revenue Dashboard
+### Kiểm tra lỗi không hiển thị dữ liệu doanh thu
+
+### Step 1: Login as Admin
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+
+### Expected: accessToken in response
+### Save the accessToken to use in next requests
+
+### Step 2: Get Dashboard Stats (Kiểm tra doanh thu)
+GET http://localhost:4000/api/dashboard/stats
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### Expected Response:
+# {
+#   "revenue": {
+#     "total": 123456789,      // ⚠️ Kiểm tra có giá trị hay = 0?
+#     "subtotal": 120000000,
+#     "shippingFee": 3456789,
+#     "discount": 0,
+#     "change": 15.5,
+#     "trend": "up"
+#   },
+#   "orders": { ... },
+#   "customers": { ... },
+#   "products": { ... }
+# }
+
+### Step 3: Get Revenue Chart (7 days)
+GET http://localhost:4000/api/dashboard/revenue?period=7days
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### Expected Response:
+# [
+#   {
+#     "date": "2025-12-15",
+#     "revenue": 5000000,     // ⚠️ Kiểm tra có data hay []?
+#     "orders": 5
+#   },
+#   ...
+# ]
+
+### Step 4: Check Recent Orders (kiểm tra có đơn hàng DELIVERED không)
+GET http://localhost:4000/api/dashboard/recent-orders?limit=10
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### Expected: List of recent orders
+
+### Step 5: Check Order Status Distribution
+GET http://localhost:4000/api/dashboard/order-status
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### Expected:
+# [
+#   {
+#     "status": "DELIVERED",
+#     "count": 15,           // ⚠️ Phải > 0 để có revenue
+#     "percentage": 50,
+#     "color": "#10B981"
+#   },
+#   ...
+# ]
+
+### DEBUG NOTES:
+# 
+# Lỗi có thể do:
+# 1. Backend không có orders với status = "DELIVERED"
+# 2. Orders createdAt ngoài khoảng 30 ngày
+# 3. Database không có data
+# 4. Frontend không gọi đúng API
+# 5. CORS/Auth issue
+#
+# Kiểm tra từng bước:
+# - Step 2: revenue.total = 0? → Không có đơn DELIVERED trong 30 ngày
+# - Step 3: Empty array []? → Không có đơn DELIVERED trong 7 ngày
+# - Step 4: Empty list? → Không có đơn hàng nào
+# - Step 5: DELIVERED count = 0? → Không có đơn đã giao
+

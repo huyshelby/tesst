@@ -1,0 +1,346 @@
+"use client";
+import * as React from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Star, Check, ShoppingCart, CreditCard, Phone } from "lucide-react";
+import type { Product } from "@/lib/product-api";
+import { formatVND } from "@/utils/currency";
+import { addItem as addCartItem } from "@/lib/cart-api";
+import { formatImageUrl } from "@/lib/utils";
+import { ProductImageSection } from "./product-image-section";
+import type { ColorVariant } from "@/hooks/use-product-images";
+
+export default function ProductHero({ product }: { product: Product }) {
+  const router = useRouter();
+  const [selectedColorIndex, setSelectedColorIndex] = React.useState(0);
+  const [selectedStorage, setSelectedStorage] = React.useState("256GB");
+
+  // Mock color variants with multi-angle images
+  const colorVariants: ColorVariant[] = [
+    {
+      value: "#000000",
+      name: "Đen",
+      images: [
+        {
+          angle: "front",
+          label: "Mặt trước",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "back",
+          label: "Mặt sau",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "side",
+          label: "Cạnh bên",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "camera",
+          label: "Cụm camera",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "lifestyle",
+          label: "Lifestyle",
+          url: formatImageUrl(product.image),
+        },
+      ],
+    },
+    {
+      value: "#4A5568",
+      name: "Xám",
+      images: [
+        {
+          angle: "front",
+          label: "Mặt trước",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "back",
+          label: "Mặt sau",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "side",
+          label: "Cạnh bên",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "camera",
+          label: "Cụm camera",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "lifestyle",
+          label: "Lifestyle",
+          url: formatImageUrl(product.image),
+        },
+      ],
+    },
+    {
+      value: "#C0C0C0",
+      name: "Bạc",
+      images: [
+        {
+          angle: "front",
+          label: "Mặt trước",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "back",
+          label: "Mặt sau",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "side",
+          label: "Cạnh bên",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "camera",
+          label: "Cụm camera",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "lifestyle",
+          label: "Lifestyle",
+          url: formatImageUrl(product.image),
+        },
+      ],
+    },
+    {
+      value: "#F5F5DC",
+      name: "Vàng",
+      images: [
+        {
+          angle: "front",
+          label: "Mặt trước",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "back",
+          label: "Mặt sau",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "side",
+          label: "Cạnh bên",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "camera",
+          label: "Cụm camera",
+          url: formatImageUrl(product.image),
+        },
+        {
+          angle: "lifestyle",
+          label: "Lifestyle",
+          url: formatImageUrl(product.image),
+        },
+      ],
+    },
+  ];
+
+  const storageOptions = ["128GB", "256GB", "512GB", "1TB"];
+
+  const handleAddToCart = async () => {
+    const selectedColor = colorVariants[selectedColorIndex];
+    await addCartItem({
+      productId: product.id,
+      quantity: 1,
+      selectedColor: selectedColor.value,
+      selectedStorage,
+    });
+    router.push("/gio-hang");
+  };
+
+  const discount =
+    product.listPrice && product.listPrice > product.price
+      ? Math.round(
+          ((product.listPrice - product.price) / product.listPrice) * 100
+        )
+      : 0;
+
+  const benefits = [
+    "Bảo hành chính hãng 12 tháng",
+    "Đổi trả trong 14 ngày",
+    "Trả góp 0% lãi suất",
+    "Miễn phí vận chuyển toàn quốc",
+    "Tặng ốp lưng + dán màn hình",
+  ];
+
+  return (
+    <section className="bg-white py-6 md:py-10">
+      <div className="content-container max-w-[1140px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
+          {/* Left - Premium Image Gallery */}
+          <div>
+            <ProductImageSection
+              colorVariants={colorVariants}
+              selectedColorIndex={selectedColorIndex}
+              onColorChange={setSelectedColorIndex}
+              discount={discount}
+              storage={selectedStorage}
+              isNew={product.badges?.includes("New")}
+            />
+          </div>
+
+          {/* Right - Product Info */}
+          <div className="space-y-4">
+            {/* Title & Rating */}
+            <div className="space-y-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                {product.name}
+              </h1>
+
+              {/* Rating */}
+              {product.rating && (
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`w-4 h-4 ${
+                          i < Math.round(product.rating ?? 0)
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "text-gray-300"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-600">
+                    ({product.reviews} đánh giá)
+                  </span>
+                </div>
+              )}
+
+              {/* Badges */}
+              <div className="flex items-center gap-2 flex-wrap">
+                {product.badges?.map((badge, i) => (
+                  <span
+                    key={i}
+                    className="px-2.5 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Pricing */}
+            <div className="space-y-1 py-4 border-y border-gray-200">
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-bold text-[color:var(--color-brand)]">
+                  {formatVND(product.price)}
+                </span>
+                {product.listPrice && product.listPrice > product.price && (
+                  <span className="text-lg text-gray-400 line-through">
+                    {formatVND(product.listPrice)}
+                  </span>
+                )}
+              </div>
+              {discount > 0 && (
+                <p className="text-sm text-red-600 font-medium">
+                  Tiết kiệm {formatVND(product.listPrice! - product.price)}
+                </p>
+              )}
+            </div>
+
+            {/* Color / Storage Options - Mock */}
+            <div className="space-y-3">
+              <div>
+                <p className="text-sm font-semibold text-gray-900 mb-2">
+                  Màu sắc
+                </p>
+                <div className="flex gap-2">
+                  {colorOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => setSelectedColor(option.value)}
+                      className={`w-10 h-10 rounded-full border-2 transition ${
+                        selectedColor === option.value
+                          ? "border-[color:var(--color-brand)] ring-2 ring-[color:var(--color-brand)]/30"
+                          : "border-gray-300 hover:border-gray-900"
+                      }`}
+                      style={{ backgroundColor: option.value }}
+                      title={option.name}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-gray-900 mb-2">
+                  Dung lượng
+                </p>
+                <div className="flex gap-2">
+                  {storageOptions.map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedStorage(size)}
+                      className={`px-4 py-2 border-2 rounded-lg text-sm font-medium transition ${
+                        selectedStorage === size
+                          ? "border-[color:var(--color-brand)] bg-blue-50 text-[color:var(--color-brand)]"
+                          : "border-gray-300 hover:border-[color:var(--color-brand)]"
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Benefits */}
+            <div className="space-y-1.5 py-3">
+              {benefits.map((benefit, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-gray-700">{benefit}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="space-y-2 pt-3">
+              <Button
+                onClick={handleAddToCart}
+                className="w-full bg-[color:var(--color-brand)] hover:bg-[color:var(--color-brand-700)] text-white rounded-full h-12 text-base font-semibold"
+              >
+                Mua ngay
+              </Button>
+
+              <div className="grid grid-cols-2 gap-3">
+                <Button
+                  onClick={handleAddToCart}
+                  variant="outline"
+                  className="rounded-full h-12 gap-2 border-gray-300"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  Thêm vào giỏ
+                </Button>
+                <Button
+                  variant="outline"
+                  className="rounded-full h-12 gap-2 border-gray-300"
+                >
+                  <CreditCard className="w-5 h-5" />
+                  Trả góp 0%
+                </Button>
+              </div>
+
+              <Button
+                variant="ghost"
+                className="w-full rounded-full h-12 gap-2 text-[color:var(--color-brand)]"
+              >
+                <Phone className="w-5 h-5" />
+                Gọi tư vấn: 1900 1234
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
