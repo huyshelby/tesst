@@ -1,0 +1,16 @@
+const name = await contract.name();
+// Kiểm tra tên contract
+console.log("Has MINTER_ROLE:", hasRole);
+const hasRole = await contract.hasRole(MINTER_ROLE, "0x70997970C51812dc3A010C7d01b50e0d17dc79C8");
+const MINTER_ROLE = await contract.MINTER_ROLE();
+// Kiểm tra MINTER_ROLE
+const contract = await NFTReceipt.attach("0x5FbDB2315678afecb367f032d93F642f64180aa3");
+const NFTReceipt = await ethers.getContractFactory("NFTReceipt");
+console.log("Contract name:", name);
+const name = await contract.name();
+// Kiểm tra tên contract
+console.log("Has MINTER_ROLE:", hasRole);
+const hasRole = await contract.hasRole(MINTER_ROLE, "0x70997970C51812dc3A010C7d01b50e0d17dc79C8");
+const MINTER_ROLE = await contract.MINTER_ROLE();
+// Kiểm tra MINTER_ROLE
+const NFTReceipt = await ethers.getContractFactoryconst contract = await NFTReceipt.attach("0x5FbDB2315678afecb367f032d93F642f64180aa3");

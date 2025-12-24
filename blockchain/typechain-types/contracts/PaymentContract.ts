@@ -26,7 +26,6 @@ import type {
 export interface PaymentContractInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "BNB_RATE"
       | "ETH_RATE"
       | "NATIVE_TOKEN"
       | "USDC_RATE"
@@ -62,7 +61,6 @@ export interface PaymentContractInterface extends Interface {
       | "PaymentFailed"
   ): EventFragment;
 
-  encodeFunctionData(functionFragment: "BNB_RATE", values?: undefined): string;
   encodeFunctionData(functionFragment: "ETH_RATE", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "NATIVE_TOKEN",
@@ -139,7 +137,6 @@ export interface PaymentContractInterface extends Interface {
     values: [AddressLike, BigNumberish]
   ): string;
 
-  decodeFunctionResult(functionFragment: "BNB_RATE", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ETH_RATE", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "NATIVE_TOKEN",
@@ -343,8 +340,6 @@ export interface PaymentContract extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  BNB_RATE: TypedContractMethod<[], [bigint], "view">;
-
   ETH_RATE: TypedContractMethod<[], [bigint], "view">;
 
   NATIVE_TOKEN: TypedContractMethod<[], [string], "view">;
@@ -417,9 +412,6 @@ export interface PaymentContract extends BaseContract {
     key: string | FunctionFragment
   ): T;
 
-  getFunction(
-    nameOrSignature: "BNB_RATE"
-  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "ETH_RATE"
   ): TypedContractMethod<[], [bigint], "view">;
