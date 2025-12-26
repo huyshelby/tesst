@@ -159,21 +159,12 @@ export class NFTReceiptService {
       };
     }
 
-    // Validate: Order must be COMPLETED and have crypto wallet
-    if (order.paymentStatus !== 'COMPLETED') {
-      throw new Error('Order must be completed before minting NFT');
-    }
-
-    if (!order.cryptoWallet) {
-      throw new Error('No crypto wallet found for this order. Please ensure payment was made via blockchain.');
-    }
-
     const metadataUrl = await this.createReceiptMetadata(order);
     
     const orderHash = ethers.utils.keccak256(
       ethers.utils.defaultAbiCoder.encode(
         ['string', 'address', 'uint256'],
-        [order.orderNumber, order.cryptoWallet, Math.floor(order.createdAt.getTime() / 1000)]
+        [order.orderNumber, order.userId, Math.floor(order.createdAt.getTime() / 1000)]
       )
     );
 
@@ -185,9 +176,8 @@ export class NFTReceiptService {
     const contractWithSigner = this.nftContract.connect(adminWallet);
     
     try {
-      // Mint NFT to the wallet that paid for the order (not userId)
       const tx = await contractWithSigner.safeMint(
-        order.cryptoWallet, // ✅ Mint to wallet address, not userId
+        order.userId,
         orderHash,
         metadataUrl
       );

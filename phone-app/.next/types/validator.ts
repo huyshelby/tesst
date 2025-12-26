@@ -66,6 +66,12 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
   handler satisfies AppPageConfig<"/account/addresses/new">
 }
 
+// Validate ..\..\src\app\account\nft-receipts\page.tsx
+{
+  const handler = {} as typeof import("..\\..\\src\\app\\account\\nft-receipts\\page.js")
+  handler satisfies AppPageConfig<"/account/nft-receipts">
+}
+
 // Validate ..\..\src\app\account\orders\[orderId]\page.tsx
 {
   const handler = {} as typeof import("..\\..\\src\\app\\account\\orders\\[orderId]\\page.js")

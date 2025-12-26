@@ -79,13 +79,13 @@ export function NFTReceipt({ orderId, initialReceipt, onMint, isMinting }: NFTRe
             </div>
           </div>
 
-          {/* <div className="bg-white rounded-lg p-3 flex items-start gap-2">
+          <div className="bg-white rounded-lg p-3 flex items-start gap-2">
             <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-medium text-gray-900">Xem trên OpenSea</p>
               <p className="text-xs text-gray-600">Hiển thị trên các NFT marketplace</p>
             </div>
-          </div> */}
+          </div>
         </div>
 
         <Button 

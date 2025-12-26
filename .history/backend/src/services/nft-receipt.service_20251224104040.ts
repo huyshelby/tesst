@@ -35,16 +35,11 @@ export class NFTReceiptService {
       image: item.productImage ? `https://your-cdn.com${item.productImage}` : null
     }));
 
-    // Create a beautiful receipt image URL (can be replaced with actual generated image)
-    // For now, using a placeholder that represents a digital receipt
-    const receiptImageUrl = process.env.NFT_RECEIPT_IMAGE_URL || 
-      "https://via.placeholder.com/512x512.png?text=Digital+Receipt";
-
     const metadata = {
       name: `Order Receipt #${order.orderNumber}`,
-      description: `Digital receipt for order ${order.orderNumber}. Total: ${order.total.toLocaleString('vi-VN')}₫. Items: ${items.length}. Customer: ${order.customerName}`,
-      image: receiptImageUrl,
-      external_url: `${process.env.FRONTEND_URL || 'https://your-store.com'}/account/orders/${order.id}`,
+      description: `Digital receipt for order ${order.orderNumber}`,
+      image: "ipfs://Qm...", // Placeholder image or logo
+      external_url: `https://your-store.com/orders/${order.id}`,
       attributes: [
         {
           trait_type: "Order Number",
@@ -55,44 +50,24 @@ export class NFTReceiptService {
           value: order.createdAt.toISOString()
         },
         {
-          trait_type: "Total Amount (VND)",
+          trait_type: "Total Amount",
           value: order.total,
-          display_type: "number"
-        },
-        {
-          trait_type: "Items Count",
-          value: items.length,
           display_type: "number"
         },
         {
           trait_type: "Status",
           value: order.status
-        },
-        {
-          trait_type: "Payment Status",
-          value: order.paymentStatus
-        },
-        {
-          trait_type: "Customer Name",
-          value: order.customerName
         }
       ],
       properties: {
         order_id: order.id,
         customer_name: order.customerName,
-        customer_email: order.customerEmail,
         items: items,
         shipping: {
           address: order.shippingAddress,
           city: order.shippingCity,
           district: order.shippingDistrict,
           ward: order.shippingWard
-        },
-        totals: {
-          subtotal: order.subtotal,
-          shipping: order.shippingFee,
-          discount: order.discount,
-          total: order.total
         }
       }
     };
@@ -159,21 +134,12 @@ export class NFTReceiptService {
       };
     }
 
-    // Validate: Order must be COMPLETED and have crypto wallet
-    if (order.paymentStatus !== 'COMPLETED') {
-      throw new Error('Order must be completed before minting NFT');
-    }
-
-    if (!order.cryptoWallet) {
-      throw new Error('No crypto wallet found for this order. Please ensure payment was made via blockchain.');
-    }
-
     const metadataUrl = await this.createReceiptMetadata(order);
     
     const orderHash = ethers.utils.keccak256(
       ethers.utils.defaultAbiCoder.encode(
         ['string', 'address', 'uint256'],
-        [order.orderNumber, order.cryptoWallet, Math.floor(order.createdAt.getTime() / 1000)]
+        [order.orderNumber, order.userId, Math.floor(order.createdAt.getTime() / 1000)]
       )
     );
 
@@ -185,9 +151,8 @@ export class NFTReceiptService {
     const contractWithSigner = this.nftContract.connect(adminWallet);
     
     try {
-      // Mint NFT to the wallet that paid for the order (not userId)
       const tx = await contractWithSigner.safeMint(
-        order.cryptoWallet, // ✅ Mint to wallet address, not userId
+        order.userId,
         orderHash,
         metadataUrl
       );

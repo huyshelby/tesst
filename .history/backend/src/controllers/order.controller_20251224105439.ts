@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { OrderService } from "../services/order.service";
 import { getBlockchainService } from "../services/blockchain";
-import { prisma } from "../utils/prisma";
+improt { prisma } from "../prisma/client";
 export class OrderController {
   // Create order from cart
   static async createOrder(req: Request, res: Response) {

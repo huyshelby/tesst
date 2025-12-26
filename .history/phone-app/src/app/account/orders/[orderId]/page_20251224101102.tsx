@@ -255,15 +255,6 @@ export default function OrderDetailPage() {
                   )}
                 </div>
               </div>
-
-              {/* NFT Receipt Section - Only show if payment completed */}
-              {order.paymentStatus === "COMPLETED" && (
-                <NFTReceipt
-                  orderId={order.id}
-                  onMint={handleMintNFT}
-                  isMinting={isMintingNFT}
-                />
-              )}
             </div>
 
             {/* Sidebar */}

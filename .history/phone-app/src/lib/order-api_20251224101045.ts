@@ -226,15 +226,14 @@ export async function cancelOrder(orderId: string): Promise<Order> {
  */
 export async function notifyBlockchainPayment(
   orderId: string,
-  txHash: string,
-  walletAddress?: string
+  txHash: string
 ): Promise<Order> {
   const res = await fetchApi(`/orders/${orderId}/blockchain-payment`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ txHash, walletAddress }),
+    body: JSON.stringify({ txHash }),
   });
 
   if (!res.ok) {

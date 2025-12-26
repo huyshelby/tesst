@@ -74,22 +74,6 @@ export default function OrderDetailPage() {
     }
   };
 
-  const handleMintNFT = async () => {
-    if (!order) return;
-    
-    setIsMintingNFT(true);
-    try {
-      await mintOrderReceipt(order.id);
-      // Refresh order to get updated NFT data
-      const updated = await getOrderById(order.id);
-      setOrder(updated);
-    } catch (err: any) {
-      alert(err.message || "Không thể mint NFT receipt");
-    } finally {
-      setIsMintingNFT(false);
-    }
-  };
-
   if (authLoading || loading) {
     return (
       <main className="bg-gray-50 min-h-screen py-12">
@@ -255,15 +239,6 @@ export default function OrderDetailPage() {
                   )}
                 </div>
               </div>
-
-              {/* NFT Receipt Section - Only show if payment completed */}
-              {order.paymentStatus === "COMPLETED" && (
-                <NFTReceipt
-                  orderId={order.id}
-                  onMint={handleMintNFT}
-                  isMinting={isMintingNFT}
-                />
-              )}
             </div>
 
             {/* Sidebar */}

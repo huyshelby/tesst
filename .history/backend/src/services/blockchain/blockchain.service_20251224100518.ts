@@ -343,17 +343,11 @@ export class BlockchainService {
 
     // ✅ CẬP NHẬT PAYMENT STATUS VÀO DATABASE
     console.log(`[ProcessPayment] Updating payment status for order ${orderId}...`);
-    
-    // Extract payer wallet address from transaction
-    const tx = await this.provider.getTransaction(txHash);
-    const walletAddress = tx?.from;
-    
     const updatedOrder = await prisma.order.update({
       where: { id: orderId },
       data: {
         paymentStatus: 'COMPLETED',
-        cryptoTxHash: txHash,
-        cryptoWallet: walletAddress || undefined // ✅ Save wallet address that paid
+        cryptoTxHash: txHash
       },
       include: {
         items: {
@@ -364,7 +358,6 @@ export class BlockchainService {
       }
     });
     console.log(`[ProcessPayment] ✅ Payment status updated to COMPLETED for order ${orderId}`);
-    console.log(`[ProcessPayment] 💼 Wallet address saved: ${walletAddress}`);
 
     return {
       status: 'completed',
